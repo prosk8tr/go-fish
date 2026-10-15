@@ -8,21 +8,22 @@ Material:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: World 1
-  m_Shader: {fileID: 10755, guid: 0000000000000000f000000000000000, type: 0}
+  m_Shader: {fileID: 4800000, guid: be891319084e9d147b09d89e80ce60e0, type: 3}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
-  m_ValidKeywords: []
-  m_InvalidKeywords:
+  m_ValidKeywords:
   - _EMISSIVE_SIMPLE
   - _IS_CLIPPING_OFF
   - _IS_OUTLINE_CLIPPING_NO
   - _OUTLINE_NML
+  m_InvalidKeywords: []
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
   m_CustomRenderQueue: -1
   stringTagMap:
     IgnoreProjection: False
+    RenderType: Opaque
   disabledShaderPasses:
   - MOTIONVECTORS
   m_LockedProperties: 
@@ -261,7 +262,7 @@ Material:
     - _1stTo2nd_ShadeFeather: 0.1
     - _1stTo2nd_ShadeStart: 0.25
     - _1st_ShadeColor_Feather: 0.0001
-    - _1st_ShadeColor_Step: 0.5
+    - _1st_ShadeColor_Step: 0.255
     - _2DLightStrength: 1
     - _2nd_ShadeColor_Feather: 0.0001
     - _2nd_ShadeColor_Step: 0
@@ -293,7 +294,7 @@ Material:
     - _AutoRenderQueue: 1
     - _BaseColorOverridden: 0
     - _BaseColorVisible: 1
-    - _BaseColor_Step: 0.5
+    - _BaseColor_Step: 0.255
     - _BaseShade_Feather: 0.0001
     - _BaseTo1st_ShadeFeather: 0.1
     - _BaseTo1st_ShadeStart: 0.5
@@ -518,15 +519,15 @@ Material:
     - _simpleUI: 0
     - _utsTechnique: 0
     m_Colors:
-    - _1st_ShadeColor: {r: 0.6698113, g: 0.6698113, b: 0.6698113, a: 1}
+    - _1st_ShadeColor: {r: 0.6603774, g: 0.23362409, b: 0.23362409, a: 1}
     - _2nd_ShadeColor: {r: 0, g: 0, b: 0, a: 1}
     - _AngelRingMaskColor: {r: 0, g: 1, b: 0, a: 1}
     - _AngelRing_Color: {r: 1, g: 1, b: 1, a: 1}
     - _Ap_RimLightColor: {r: 1, g: 1, b: 1, a: 1}
-    - _BaseColor: {r: 1, g: 0.37040275, b: 0.2980392, a: 1}
+    - _BaseColor: {r: 0.9607843, g: 0.33842438, b: 0.25098035, a: 1}
     - _BaseColorMap_MipInfo: {r: 0, g: 0, b: 0, a: 0}
     - _BaseColorMaskColor: {r: 1, g: 1, b: 1, a: 1}
-    - _Color: {r: 1, g: 0.37040272, b: 0.29803917, a: 1}
+    - _Color: {r: 0.96078426, g: 0.33842435, b: 0.25098032, a: 1}
     - _ColorShift: {r: 0, g: 0, b: 0, a: 1}
     - _DirectionalLight_Color: {r: 1, g: 1, b: 1, a: 1}
     - _DirectionalLight_Direction: {r: 0, g: -1, b: 0, a: 0}
