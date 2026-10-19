@@ -660,6 +660,7 @@ GameObject:
   - component: {fileID: 593060580}
   - component: {fileID: 593060582}
   - component: {fileID: 593060583}
+  - component: {fileID: 593060584}
   m_Layer: 0
   m_Name: CinemachineCamera
   m_TagString: Untagged
@@ -757,6 +758,45 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Unity.Cinemachine::Unity.Cinemachine.CinemachineRotateWithFollowTarget
   Damping: 0
+--- !u!114 &593060584
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 593060579}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dbe43d662878a7c43bcd44d43c9e2094, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Unity.Cinemachine::Unity.Cinemachine.CinemachineDeoccluder
+  CollideAgainst:
+    serializedVersion: 2
+    m_Bits: 1
+  IgnoreTag: Player
+  TransparentLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  MinimumDistanceFromTarget: 0.3
+  AvoidObstacles:
+    Enabled: 1
+    DistanceLimit: 0
+    MinimumOcclusionTime: 0
+    CameraRadius: 0.4
+    UseFollowTarget:
+      Enabled: 0
+      YOffset: 0
+    Strategy: 0
+    MaximumEffort: 4
+    SmoothingTime: 0
+    Damping: 0.4
+    DampingWhenOccluded: 0.2
+  ShotQualityEvaluation:
+    Enabled: 0
+    OptimalDistance: 10
+    NearLimit: 5
+    FarLimit: 30
+    MaxQualityBoost: 0.2
 --- !u!1 &724154549
 GameObject:
   m_ObjectHideFlags: 0
@@ -1385,7 +1425,7 @@ Rigidbody:
   m_GameObject: {fileID: 1212419551}
   serializedVersion: 5
   m_Mass: 1
-  m_LinearDamping: 0
+  m_LinearDamping: 0.5
   m_AngularDamping: 0.05
   m_CenterOfMass: {x: 0, y: 0, z: 0}
   m_InertiaTensor: {x: 1, y: 1, z: 1}
@@ -1400,7 +1440,7 @@ Rigidbody:
   m_ImplicitTensor: 1
   m_UseGravity: 1
   m_IsKinematic: 0
-  m_Interpolate: 0
+  m_Interpolate: 1
   m_Constraints: 0
   m_CollisionDetection: 2
 --- !u!114 &1212419557
@@ -1416,6 +1456,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerController
   input: {fileID: 1838511323}
+  calcYaw: {fileID: 1838511327}
 --- !u!1 &1283935915 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 118dd8ea2204403499dd056b36d539f5, type: 3}
@@ -1580,6 +1621,7 @@ GameObject:
   - component: {fileID: 1838511324}
   - component: {fileID: 1838511323}
   - component: {fileID: 1838511326}
+  - component: {fileID: 1838511327}
   m_Layer: 0
   m_Name: CameraTarget
   m_TagString: Untagged
@@ -1641,6 +1683,21 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::CameraController
   ball: {fileID: 1212419551}
   input: {fileID: 1838511323}
+  calcYaw: {fileID: 1838511327}
+  pitch: 15
+--- !u!114 &1838511327
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1838511322}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d4e335206dd20134b976a39aede9187d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CameraYaw
+  rbBall: {fileID: 1212419556}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
