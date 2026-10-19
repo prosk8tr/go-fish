@@ -5,7 +5,7 @@ public class TiltInput : MonoBehaviour
 {
     // 
 
-    float sensitivity = 0.1f;
+    float sensitivity = 0.4f;
     float maxTilt = 25f; // degrees
     float smoothing = 10f;
     Vector2 targetTilt;
@@ -24,6 +24,7 @@ public class TiltInput : MonoBehaviour
         if (mouse != null && mouse.leftButton.isPressed)
         {
             targetTilt += mouse.delta.ReadValue() * sensitivity;
+
             targetTilt = Vector2.ClampMagnitude(targetTilt, maxTilt);
         }
         else

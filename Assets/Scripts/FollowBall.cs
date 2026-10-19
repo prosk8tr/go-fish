@@ -1,6 +1,4 @@
 using UnityEngine;
-using UnityEngine.UIElements;
-
 public class FollowBall : MonoBehaviour
 {
     public GameObject following;

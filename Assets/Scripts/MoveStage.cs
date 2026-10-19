@@ -7,6 +7,8 @@ public class MoveFloor : MonoBehaviour
     Rigidbody stage;
     float pitch, roll;
     float sensitivity = 0.1f;
+    float maxTilt = 25f;
+    float smoothing = 15f;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {

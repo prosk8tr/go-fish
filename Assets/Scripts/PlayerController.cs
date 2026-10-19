@@ -1,3 +1,4 @@
+using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 
 public class PlayerController : MonoBehaviour
@@ -5,6 +6,7 @@ public class PlayerController : MonoBehaviour
     public TiltInput input;
     float force = 20f; // max applicable force, in m/s
     Rigidbody rb;
+    public CalculateYaw calcYaw;
 
     void Start()
     {
@@ -14,6 +16,11 @@ public class PlayerController : MonoBehaviour
     void FixedUpdate()
     {
         Vector2 tiltStrength = input.TiltStrength;
-        rb.AddForce(new Vector3(tiltStrength.x, 0f, tiltStrength.y) * force);
+        Vector3 movement = new Vector3(tiltStrength.x, 0f, tiltStrength.y);
+        Quaternion direction = Quaternion.Euler(0f, calcYaw.Yaw, 0f);
+
+
+
+        rb.AddForce(direction * movement * force, ForceMode.Acceleration);
     }
 }
