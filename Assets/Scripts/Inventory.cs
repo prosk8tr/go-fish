@@ -3,19 +3,29 @@ using UnityEngine;
 public class Inventory : MonoBehaviour
 {
     public static int fish = 0;
+    AudioSource audioSource;
+    public AudioClip pickupSound;
+    public int lives = 3;
+  
     private void Start()
     {
-        fish = 0;        
+        fish = 0;
+        audioSource = GetComponent<AudioSource>();
     }
     void fishPickup()
     {
-        //Play sound
+        audioSource.PlayOneShot(pickupSound);
         fish++;
         //Update HUD
-        print(fish);
         if(fish >= 10)
         {
+            lives++;
             print("1UP"); //1UP, sfx, etc
         }
+    }
+
+    void LoseLife()
+    {
+        lives--;
     }
 }
