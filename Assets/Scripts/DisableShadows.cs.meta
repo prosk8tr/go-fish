@@ -1,0 +1,13 @@
+fileFormatVersion: 2
+guid: 52ae8e564ee9b0c499f29f9c1c8a57ab
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences:
+  - eyeMat: {fileID: 2100000, guid: 78fe7bcf63808cc42a6b836ad69949a4, type: 2}
+  - mouthMat: {fileID: 2100000, guid: bbea713df87ee324481bc1c0250970c9, type: 2}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
