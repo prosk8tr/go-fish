@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class ParticleController : MonoBehaviour
+public class PickupParticleController : MonoBehaviour
 {
     ParticleSystem particleSys;
     void Start()
