@@ -5,10 +5,10 @@ public class ParticlesOnCollision : MonoBehaviour
     public ParticleSystem particleSys;
     private void OnCollisionEnter(Collision collision)
     {
-        if (collision.gameObject.CompareTag("Wall"))
+        // collision.gameObject returns the Rigidbody's object (Stage), not the wall itself
+        if (collision.collider.CompareTag("Wall"))
         {
-            print("AAA");
-            ContactPoint contact = collision.contacts[0];
+            ContactPoint contact = collision.GetContact(0);
 
             particleSys.transform.position = contact.point;
             particleSys.transform.rotation = Quaternion.LookRotation(contact.normal);
