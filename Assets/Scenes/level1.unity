@@ -832,19 +832,6 @@ Transform:
   - {fileID: 1118203328}
   m_Father: {fileID: 234537482}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &789991947
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 335954572}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 75121030ffb52ce4a820f1cc3235907f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::FollowBall
-  following: {fileID: 1212419551}
 --- !u!114 &789991948
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -875,6 +862,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::DisableShadows
   eyeMat: {fileID: 2100000, guid: 78fe7bcf63808cc42a6b836ad69949a4, type: 2}
   mouthMat: {fileID: 2100000, guid: bbea713df87ee324481bc1c0250970c9, type: 2}
+--- !u!114 &789991954
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 335954572}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 277674de2667a4c4cbbb1362f11a4eff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::InsideBall
+  following: {fileID: 1212419551}
 --- !u!1001 &841256111
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -985,13 +985,13 @@ PrefabInstance:
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: b7a386430352a3441881bfa6396e248d, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 789991947}
-    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: b7a386430352a3441881bfa6396e248d, type: 3}
-      insertIndex: -1
       addedObject: {fileID: 789991948}
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: b7a386430352a3441881bfa6396e248d, type: 3}
       insertIndex: -1
       addedObject: {fileID: 789991951}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: b7a386430352a3441881bfa6396e248d, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 789991954}
   m_SourcePrefab: {fileID: 100100000, guid: b7a386430352a3441881bfa6396e248d, type: 3}
 --- !u!1 &961739749
 GameObject:
@@ -1683,6 +1683,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ParticlesOnCollision
   particleSys: {fileID: 1250571329}
+  minSpeed: 8
 --- !u!1 &1250571326
 GameObject:
   m_ObjectHideFlags: 0

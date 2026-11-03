@@ -3,10 +3,15 @@ using UnityEngine;
 public class ParticlesOnCollision : MonoBehaviour
 {
     public ParticleSystem particleSys;
+    public float minSpeed;
+    Rigidbody ballRb;
+    private void Start()
+    {
+        ballRb = GetComponent<Rigidbody>();
+    }
     private void OnCollisionEnter(Collision collision)
     {
-        // collision.gameObject returns the Rigidbody's object (Stage), not the wall itself
-        if (collision.collider.CompareTag("Wall"))
+        if (collision.collider.CompareTag("Wall") && ballRb.linearVelocity.magnitude > minSpeed)
         {
             ContactPoint contact = collision.GetContact(0);
 
