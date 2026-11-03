@@ -10,31 +10,31 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: -8679921383154817045, guid: 118dd8ea2204403499dd056b36d539f5, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 6.8736143
+      value: 3.12
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 118dd8ea2204403499dd056b36d539f5, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 8.260712
+      value: 9.23
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 118dd8ea2204403499dd056b36d539f5, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 4.5008416
+      value: 8.4
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 118dd8ea2204403499dd056b36d539f5, type: 3}
       propertyPath: m_LocalRotation.w
-      value: -0.6438968
+      value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 118dd8ea2204403499dd056b36d539f5, type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0.6438968
+      value: -0.5
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 118dd8ea2204403499dd056b36d539f5, type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0.29222757
+      value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 118dd8ea2204403499dd056b36d539f5, type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0.29222745
+      value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 118dd8ea2204403499dd056b36d539f5, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -46,7 +46,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 118dd8ea2204403499dd056b36d539f5, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
-      value: -408.82098
+      value: 90
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 118dd8ea2204403499dd056b36d539f5, type: 3}
       propertyPath: m_Name
@@ -111,3 +111,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3cca4c0999998cb4d88a33743d4cd011, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Pickup
+  particleSys: {fileID: 0}
