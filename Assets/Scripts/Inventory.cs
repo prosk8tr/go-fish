@@ -10,6 +10,7 @@ public class Inventory : MonoBehaviour
     public int lives = 3;
     public TextMeshProUGUI fishGUI;
     public TextMeshProUGUI livesGUI;
+    public TextMeshProUGUI scoreGUI;
     public int fishFor1Up;
   
     private void Start()
@@ -18,6 +19,7 @@ public class Inventory : MonoBehaviour
         audioSource = GetComponent<AudioSource>();
         fishGUI.SendMessage("UpdateItemCount", new int[] { fish, fishFor1Up });
         livesGUI.SendMessage("UpdateItemCount", lives);
+        scoreGUI.SendMessage("UpdateScore", score);
     }
     void fishPickup()
     {
@@ -25,7 +27,7 @@ public class Inventory : MonoBehaviour
         fish++;
         score += 100;
         fishGUI.SendMessage("UpdateItemCount", new int[] { fish, fishFor1Up });
-        print(score);
+        scoreGUI.SendMessage("UpdateScore", score);
         if(fish >= fishFor1Up)
         {
             lives++;
@@ -39,6 +41,7 @@ public class Inventory : MonoBehaviour
     void LoseLife()
     {
         lives--;
-        livesGUI.SendMessage("UpdateItemCount", new int[] { fish, fishFor1Up });
+        livesGUI.SendMessage("UpdateItemCount", lives);
+        livesGUI.SendMessage("TurnRedBelow", new int[] { lives, 0 });
     }
 }

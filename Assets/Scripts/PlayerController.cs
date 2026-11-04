@@ -33,7 +33,6 @@ public class PlayerController : MonoBehaviour
     void Die()
     {
         audioSource.PlayOneShot(dieSound);
-        inventory.SendMessage("LoseLife");
         ballCollider.enabled = false;
         StartCoroutine("RespawnPlayer");
     }
@@ -41,6 +40,7 @@ public class PlayerController : MonoBehaviour
     IEnumerator RespawnPlayer()
     {
         yield return new WaitForSeconds(dieWait);
+        inventory.SendMessage("LoseLife");
         ballCollider.enabled = true;
         rb.transform.position = RespawnPosition;
         rb.angularVelocity = Vector3.zero;
