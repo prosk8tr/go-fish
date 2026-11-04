@@ -12,8 +12,8 @@ public class Pickup : MonoBehaviour
     {
         if (other.gameObject.CompareTag("Player"))
         {
-            other.gameObject.SendMessage("fishPickup");
-            particleSys.SendMessage("emitFishParticles", gameObject.transform);
+            other.gameObject.SendMessage("FishPickup");
+            particleSys.SendMessage("EmitFishParticles", gameObject.transform);
             Destroy(gameObject);
         }
     }

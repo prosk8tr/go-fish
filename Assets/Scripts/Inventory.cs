@@ -1,3 +1,5 @@
+using System;
+using System.Threading;
 using TMPro;
 using UnityEngine;
 
@@ -12,6 +14,8 @@ public class Inventory : MonoBehaviour
     public TextMeshProUGUI livesGUI;
     public TextMeshProUGUI scoreGUI;
     public int fishFor1Up;
+    public Timer timer;
+    private bool hasWon;
   
     private void Start()
     {
@@ -21,7 +25,7 @@ public class Inventory : MonoBehaviour
         livesGUI.SendMessage("UpdateItemCount", lives);
         scoreGUI.SendMessage("UpdateScore", score);
     }
-    void fishPickup()
+    void FishPickup()
     {
         audioSource.PlayOneShot(pickupSound);
         fish++;
@@ -43,5 +47,16 @@ public class Inventory : MonoBehaviour
         lives--;
         livesGUI.SendMessage("UpdateItemCount", lives);
         livesGUI.SendMessage("TurnRedBelow", new int[] { lives, 0 });
+    }
+
+    void CalcScore ()
+    {   if (!hasWon)
+        {
+            hasWon = true;
+            timer.SendMessage("StopTimer");
+            int timeScore = (int)Math.Round(timer.timeRemaining, 2) * 1000;
+            score += timeScore;
+            scoreGUI.SendMessage("UpdateScore", score);
+        }
     }
 }

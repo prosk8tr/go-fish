@@ -7,7 +7,7 @@ public class PickupParticleController : MonoBehaviour
     {
         particleSys = gameObject.GetComponent<ParticleSystem>();
     }
-    void emitFishParticles(Transform trans)
+    void EmitFishParticles(Transform trans)
     {
         Vector3 fishPosition = trans.transform.position;
         transform.position = fishPosition;
