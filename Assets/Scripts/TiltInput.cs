@@ -9,7 +9,7 @@ public class TiltInput : MonoBehaviour
     float maxTilt = 25f; // degrees
     float smoothing = 10f;
     Vector2 targetTilt;
-    public Vector2 tilt { get; private set; } // smoothed tilt, in degrees
+    public Vector2 tilt { get; set; } // smoothed tilt, in degrees
     public Vector2 TiltStrength
     {
         get

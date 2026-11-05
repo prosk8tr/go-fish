@@ -6,7 +6,7 @@ using UnityEngine;
 public class PlayerController : MonoBehaviour
 {
     public TiltInput input;
-    float force = 20f; // max applicable force, in m/s
+    public float force = 20f; // max applicable force, in m/s
     Rigidbody rb;
     public CalculateYaw calcYaw;
     AudioSource audioSource;
@@ -15,7 +15,6 @@ public class PlayerController : MonoBehaviour
     public Vector3 RespawnPosition { get; set; }
     public Collider ballCollider;
     public float dieWait = 1f;
-    public TextMeshProUGUI stageClearText;
     void Start()
     {
         rb = GetComponent<Rigidbody>();
@@ -47,11 +46,5 @@ public class PlayerController : MonoBehaviour
         rb.transform.position = RespawnPosition;
         rb.angularVelocity = Vector3.zero;
         rb.linearVelocity = Vector3.zero;
-    }
-
-    void EndStage()
-    {
-        stageClearText.gameObject.SetActive(true);
-        inventory.SendMessage("CalcScore");
     }
 }
