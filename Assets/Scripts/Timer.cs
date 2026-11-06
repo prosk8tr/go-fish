@@ -33,14 +33,14 @@ public class Timer : MonoBehaviour
         }
     }
 
-    void StartTimer()
+    public void StartTimer()
     {
         timeRemaining = startTime;
         timeText.gameObject.SetActive(true);
         isActive = true;
     }
 
-    void StopTimer()
+    public void StopTimer()
     {
         isActive = false;
     }

@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class Pickup : MonoBehaviour
 {
-    public ParticleSystem particleSys;
+    public FishParticleController particleSys;
     void Update()
     {
         transform.Rotate(new Vector3(0,0,240) * Time.deltaTime);
@@ -12,8 +12,8 @@ public class Pickup : MonoBehaviour
     {
         if (other.gameObject.CompareTag("Player"))
         {
-            other.gameObject.SendMessage("FishPickup");
-            particleSys.SendMessage("EmitFishParticles", gameObject.transform);
+            other.GetComponent<Inventory>().FishPickup();
+            particleSys.EmitFishParticles(transform);
             Destroy(gameObject);
         }
     }

@@ -14,6 +14,7 @@ public class PlayerController : MonoBehaviour
     public Inventory inventory;
     public Vector3 RespawnPosition { get; set; }
     public Collider ballCollider;
+    public CameraController cameraController;
     public float dieWait = 1f;
     void Start()
     {
@@ -38,10 +39,26 @@ public class PlayerController : MonoBehaviour
         StartCoroutine("RespawnPlayer");
     }
 
+    // Stops player and camera input (e.g. when the stage is cleared)
+    public void FreezeControls()
+    {
+        enabled = false;
+        cameraController.GetComponent<TiltInput>().tilt = Vector2.zero;
+        cameraController.enabled = false;
+    }
+
+    // Returns the player to the respawn point and restores player and camera input
+    public void ResumeAtRespawn()
+    {
+        transform.position = RespawnPosition;
+        cameraController.enabled = true;
+        enabled = true;
+    }
+
     IEnumerator RespawnPlayer()
     {
         yield return new WaitForSeconds(dieWait);
-        inventory.SendMessage("LoseLife");
+        inventory.LoseLife();
         ballCollider.enabled = true;
         rb.transform.position = RespawnPosition;
         rb.angularVelocity = Vector3.zero;

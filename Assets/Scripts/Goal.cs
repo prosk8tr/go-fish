@@ -7,7 +7,7 @@ public class Goal : MonoBehaviour
     {
         if (other.gameObject.CompareTag("Player"))
         {
-            other.gameObject.SendMessage("EndStage");
+            other.GetComponent<Inventory>().EndStage();
             gameObject.GetComponentInChildren<ParticleSystem>().Play();
             gameObject.GetComponent<AudioSource>().Play();
         }
@@ -17,8 +17,9 @@ public class Goal : MonoBehaviour
     {
         if (other.gameObject.CompareTag("Player"))
         {
-            other.GetComponent<Rigidbody>().linearVelocity *= speedScale;
-            other.GetComponent<Rigidbody>().angularVelocity *= speedScale;
+            Rigidbody rb = other.GetComponent<Rigidbody>();
+            rb.linearVelocity *= speedScale;
+            rb.angularVelocity *= speedScale;
         }
     }
 }
