@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using UnityEngine;
 
 public class Inventory : MonoBehaviour
@@ -15,6 +16,7 @@ public class Inventory : MonoBehaviour
     public InventoryGUI gui;
     public int fishFor1Up;
     public Timer timer;
+    public int countdownSeconds = 3;
     private bool hasWon;
     PlayerController playerController;
 
@@ -27,6 +29,9 @@ public class Inventory : MonoBehaviour
         gui.UpdateFish(fish, fishFor1Up);
         gui.UpdateLives(lives);
         gui.UpdateScore(score);
+        playerController.DisableMovement();
+        timer.ResetTimer();
+        StartCoroutine(Countdown());
     }
     public void FishPickup()
     {
@@ -78,7 +83,24 @@ public class Inventory : MonoBehaviour
         timeScore = 0;
         fishThisLevel = 0;
         levelScore = 0;
+        hasWon = false;
 
-        playerController.ResumeAtRespawn();
+        playerController.ResetToRespawn();
+        timer.ResetTimer();
+        StartCoroutine(Countdown());
+    }
+
+    IEnumerator Countdown()
+    {
+        for (int i = countdownSeconds; i > 0; i--)
+        {
+            gui.ShowCountdown(i.ToString(), countdownSeconds - i);
+            yield return new WaitForSeconds(1f);
+        }
+        gui.ShowCountdown("GO!", countdownSeconds, true);
+        playerController.EnableControls();
+        timer.StartTimer();
+        yield return new WaitForSeconds(0.7f);
+        gui.HideCountdown();
     }
 }

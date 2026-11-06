@@ -15,8 +15,10 @@ public class PlayerController : MonoBehaviour
     public Vector3 RespawnPosition { get; set; }
     public Collider ballCollider;
     public CameraController cameraController;
+    public RotatePlayerModel playerModel;
     public float dieWait = 1f;
-    void Start()
+    // Awake rather than Start, so setup still runs if movement is disabled before the first frame
+    void Awake()
     {
         rb = GetComponent<Rigidbody>();
         audioSource = GetComponent<AudioSource>();
@@ -42,17 +44,38 @@ public class PlayerController : MonoBehaviour
     // Stops player and camera input (e.g. when the stage is cleared)
     public void FreezeControls()
     {
-        enabled = false;
+        DisableMovement();
         cameraController.GetComponent<TiltInput>().tilt = Vector2.zero;
         cameraController.enabled = false;
     }
 
-    // Returns the player to the respawn point and restores player and camera input
-    public void ResumeAtRespawn()
+    // Stops the player responding to input (the camera is unaffected)
+    public void DisableMovement()
+    {
+        enabled = false;
+    }
+
+    // Lets the player respond to input again
+    public void EnableControls()
+    {
+        enabled = true;
+    }
+
+    // Returns the ball to the respawn point, at rest, with the camera following it again.
+    // Movement stays disabled until EnableControls is called.
+    public void ResetToRespawn()
     {
         transform.position = RespawnPosition;
+        StopBall();
+        ResetOrientation();
         cameraController.enabled = true;
-        enabled = true;
+    }
+
+    // Resets the camera yaw and player model rotation, e.g. when starting the next stage
+    public void ResetOrientation()
+    {
+        calcYaw.ResetYaw();
+        playerModel.ResetRotation();
     }
 
     IEnumerator RespawnPlayer()
@@ -61,6 +84,11 @@ public class PlayerController : MonoBehaviour
         inventory.LoseLife();
         ballCollider.enabled = true;
         rb.transform.position = RespawnPosition;
+        StopBall();
+    }
+
+    void StopBall()
+    {
         rb.angularVelocity = Vector3.zero;
         rb.linearVelocity = Vector3.zero;
     }

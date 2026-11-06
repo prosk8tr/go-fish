@@ -7,10 +7,11 @@ public class Timer : MonoBehaviour
     public float timeRemaining;
     public TextMeshProUGUI timeText;
     public bool isActive = false;
+    Color defaultColour;
 
-    void Start()
+    void Awake()
     {
-        StartTimer();
+        defaultColour = timeText.color;
     }
     void Update()
     {
@@ -33,10 +34,18 @@ public class Timer : MonoBehaviour
         }
     }
 
+    // Sets the timer back to its start time and shows it, without starting it
+    public void ResetTimer()
+    {
+        isActive = false;
+        timeRemaining = startTime;
+        timeText.color = defaultColour;
+        timeText.text = timeRemaining.ToString("0.00");
+        timeText.gameObject.SetActive(true);
+    }
+
     public void StartTimer()
     {
-        timeRemaining = startTime;
-        timeText.gameObject.SetActive(true);
         isActive = true;
     }
 

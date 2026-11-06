@@ -11,6 +11,13 @@ public class CalculateYaw : MonoBehaviour
     float smoothTime = 0.4f;
     float yawVelocity;
 
+    // Snaps the camera yaw to the given angle and cancels any in-progress smoothing
+    public void ResetYaw(float yaw = 0f)
+    {
+        Yaw = yaw;
+        yawVelocity = 0f;
+    }
+
     void LateUpdate()
     {
         // Get ball velocity and speed
