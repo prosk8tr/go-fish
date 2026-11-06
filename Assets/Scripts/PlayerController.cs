@@ -39,9 +39,7 @@ public class PlayerController : MonoBehaviour
         audioSource.PlayOneShot(dieSound);
         ballCollider.enabled = false;
         StartCoroutine("RespawnPlayer");
-    }
-
-    // Stops player and camera input (e.g. when the stage is cleared)
+    } 
     public void FreezeControls()
     {
         DisableMovement();
@@ -49,20 +47,16 @@ public class PlayerController : MonoBehaviour
         cameraController.enabled = false;
     }
 
-    // Stops the player responding to input (the camera is unaffected)
     public void DisableMovement()
     {
         enabled = false;
     }
 
-    // Lets the player respond to input again
     public void EnableControls()
     {
         enabled = true;
     }
 
-    // Returns the ball to the respawn point, at rest, with the camera following it again.
-    // Movement stays disabled until EnableControls is called.
     public void ResetToRespawn()
     {
         transform.position = RespawnPosition;
@@ -71,7 +65,6 @@ public class PlayerController : MonoBehaviour
         cameraController.enabled = true;
     }
 
-    // Resets the camera yaw and player model rotation, e.g. when starting the next stage
     public void ResetOrientation()
     {
         calcYaw.ResetYaw();
