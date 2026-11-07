@@ -858,6 +858,9 @@ MonoBehaviour:
   goColour: {r: 0, g: 1, b: 0, a: 1}
   timeOutText: {fileID: 0}
   retryText: {fileID: 0}
+  gameplayCamera: {fileID: 0}
+  aerialCamera: {fileID: 0}
+  fadeToBlackPanel: {fileID: 0}
   LowLivesMaterial: {fileID: 0}
 --- !u!114 &85670950
 MonoBehaviour:
@@ -1090,6 +1093,7 @@ RectTransform:
   - {fileID: 874585184}
   - {fileID: 1228777792}
   - {fileID: 76077698}
+  - {fileID: 2031439975}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -1130,6 +1134,9 @@ MonoBehaviour:
   goColour: {r: 0, g: 1, b: 0, a: 1}
   timeOutText: {fileID: 172809548}
   retryText: {fileID: 37399703}
+  gameplayCamera: {fileID: 961739752}
+  aerialCamera: {fileID: 1503084760}
+  fadeToBlackPanel: {fileID: 2031439974}
   LowLivesMaterial: {fileID: 2100000, guid: c3bcba85dd321a444bb95a98d5428217, type: 2}
 --- !u!1 &135399822
 GameObject:
@@ -2813,6 +2820,9 @@ MonoBehaviour:
   goColour: {r: 0, g: 1, b: 0, a: 1}
   timeOutText: {fileID: 0}
   retryText: {fileID: 0}
+  gameplayCamera: {fileID: 0}
+  aerialCamera: {fileID: 0}
+  fadeToBlackPanel: {fileID: 0}
   LowLivesMaterial: {fileID: 0}
 --- !u!114 &528115359
 MonoBehaviour:
@@ -5293,6 +5303,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::AerialCameraController
   pivot: {fileID: 1762504091}
   speed: 50
+  resetPosition: {x: 0, y: 0, z: 0}
+  resetRotation: {x: 0, y: 0, z: 0, w: 0}
+  isActive: 0
 --- !u!4 &1509627346 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 5101647555257850442, guid: b31e191ec283f4042a791e380c41b776, type: 3}
@@ -5680,6 +5693,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::AerialCameraController
   pivot: {fileID: 0}
   speed: 5
+  resetPosition: {x: 0, y: 0, z: 0}
+  resetRotation: {x: 0, y: 0, z: 0, w: 0}
+  isActive: 0
 --- !u!1 &1838511322
 GameObject:
   m_ObjectHideFlags: 0
@@ -6053,6 +6069,81 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1957911413}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!1 &2031439974
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2031439975}
+  - component: {fileID: 2031439977}
+  - component: {fileID: 2031439976}
+  m_Layer: 5
+  m_Name: BlackFade
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &2031439975
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2031439974}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 100030797}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &2031439976
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2031439974}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
+  m_Material: {fileID: 0}
+  m_Color: {r: 0, g: 0, b: 0, a: 0}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_Sprite: {fileID: 10907, guid: 0000000000000000f000000000000000, type: 0}
+  m_Type: 1
+  m_PreserveAspect: 0
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+  m_UseSpriteMesh: 0
+  m_PixelsPerUnitMultiplier: 1
+--- !u!222 &2031439977
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2031439974}
+  m_CullTransparentMesh: 1
 --- !u!1 &2033324633
 GameObject:
   m_ObjectHideFlags: 0

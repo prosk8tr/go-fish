@@ -44,6 +44,7 @@ public class GameManager : MonoBehaviour
         timer.ResetTimer();
         stageStartScore = score;
         stageStartFish = fish;
+        StartCoroutine(gui.StagePreview());
         StartCoroutine(Countdown());
     }
 

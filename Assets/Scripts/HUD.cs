@@ -22,7 +22,10 @@ public class HUD : MonoBehaviour
     public Color countdownColour = Color.white;
     public Color goColour = Color.green;
     public TextMeshProUGUI timeOutText;
-    public TextMeshProUGUI retryText; 
+    public TextMeshProUGUI retryText;
+    public Camera gameplayCamera;
+    public Camera aerialCamera;
+    public GameObject fadeToBlackPanel;
 
     private Color32 LowLivesColour = new Color32(240, 33, 33, 255);
     public Material LowLivesMaterial;
@@ -128,5 +131,23 @@ public class HUD : MonoBehaviour
         yield return new WaitForSeconds(0.7f);
 
         nextButton.gameObject.SetActive(true);
+    }
+
+    public IEnumerator StagePreview()
+    {
+        if (gameplayCamera.enabled)
+        {
+            gameplayCamera.enabled = false;
+            aerialCamera.enabled = true;
+        }
+
+        aerialCamera.gameObject.GetComponent<AerialCameraController>().isActive = true;
+        yield return new WaitForSeconds(5f);
+        aerialCamera.gameObject.GetComponent<AerialCameraController>().isActive = false;
+        Color blackFadeColour = fadeToBlackPanel.GetComponent<Image>().color;
+        blackFadeColour.a = Mathf.Lerp(0, 1, Time.deltaTime);
+        aerialCamera.enabled = false;
+        gameplayCamera.enabled = true;
+        blackFadeColour.a = Mathf.Lerp(1, 0, Time.deltaTime);
     }
 }
