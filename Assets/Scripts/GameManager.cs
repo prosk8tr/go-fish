@@ -44,8 +44,7 @@ public class GameManager : MonoBehaviour
         timer.ResetTimer();
         stageStartScore = score;
         stageStartFish = fish;
-        StartCoroutine(gui.StagePreview());
-        StartCoroutine(Countdown());
+        StartCoroutine(BeginStage(true));
     }
 
     void Update()
@@ -110,7 +109,7 @@ public class GameManager : MonoBehaviour
             yield return new WaitForSeconds(1f);
         }
         ResetStageProgress();
-        StartStage();
+        StartStage(false); // a retry skips the intro
     }
 
     IEnumerator GameOverRoutine()
@@ -167,7 +166,7 @@ public class GameManager : MonoBehaviour
         playerController.FreezeControls();
     }
 
-    public void StartStage()
+    void StartStage(bool playIntro)
     {
         gui.HideStageClear();
         gui.HideTimeOut();
@@ -181,7 +180,14 @@ public class GameManager : MonoBehaviour
         timer.ResetTimer();
         stageStartScore = score;
         stageStartFish = fish;
-        StartCoroutine(Countdown());
+        StartCoroutine(BeginStage(playIntro));
+    }
+
+    IEnumerator BeginStage(bool playIntro)
+    {
+        if (playIntro)
+            yield return StartCoroutine(gui.StagePreview());
+        yield return StartCoroutine(Countdown());
     }
 
     IEnumerator Countdown()

@@ -861,6 +861,9 @@ MonoBehaviour:
   gameplayCamera: {fileID: 0}
   aerialCamera: {fileID: 0}
   fadeToBlackPanel: {fileID: 0}
+  previewSeconds: 5
+  fadeSeconds: 0.5
+  hudElements: []
   LowLivesMaterial: {fileID: 0}
 --- !u!114 &85670950
 MonoBehaviour:
@@ -1121,7 +1124,7 @@ MonoBehaviour:
   timeScoreText: {fileID: 135399824}
   fishThisLevelText: {fileID: 1756478882}
   stageScoreText: {fileID: 2033324635}
-  stageHighScoreText: {fileID: 0}
+  stageHighScoreText: {fileID: 874585185}
   totalScoreText: {fileID: 1228777793}
   nextButton: {fileID: 1860484892}
   countdownText: {fileID: 349757216}
@@ -1137,6 +1140,9 @@ MonoBehaviour:
   gameplayCamera: {fileID: 961739752}
   aerialCamera: {fileID: 1503084760}
   fadeToBlackPanel: {fileID: 2031439974}
+  previewSeconds: 7
+  fadeSeconds: 1
+  hudElements: []
   LowLivesMaterial: {fileID: 2100000, guid: c3bcba85dd321a444bb95a98d5428217, type: 2}
 --- !u!1 &135399822
 GameObject:
@@ -2823,6 +2829,9 @@ MonoBehaviour:
   gameplayCamera: {fileID: 0}
   aerialCamera: {fileID: 0}
   fadeToBlackPanel: {fileID: 0}
+  previewSeconds: 5
+  fadeSeconds: 0.5
+  hudElements: []
   LowLivesMaterial: {fileID: 0}
 --- !u!114 &528115359
 MonoBehaviour:
@@ -3314,7 +3323,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &593060580
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4112,7 +4121,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &961739750
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5302,9 +5311,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::AerialCameraController
   pivot: {fileID: 1762504091}
-  speed: 50
-  resetPosition: {x: 0, y: 0, z: 0}
-  resetRotation: {x: 0, y: 0, z: 0, w: 0}
+  speed: 40
   isActive: 0
 --- !u!4 &1509627346 stripped
 Transform:
@@ -5693,8 +5700,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::AerialCameraController
   pivot: {fileID: 0}
   speed: 5
-  resetPosition: {x: 0, y: 0, z: 0}
-  resetRotation: {x: 0, y: 0, z: 0, w: 0}
   isActive: 0
 --- !u!1 &1838511322
 GameObject:
@@ -5879,7 +5884,7 @@ MonoBehaviour:
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
-          m_StringArgument: StartStage
+          m_StringArgument: StartStage(true)
           m_BoolArgument: 0
         m_CallState: 2
 --- !u!114 &1860484893

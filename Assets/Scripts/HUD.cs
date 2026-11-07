@@ -26,6 +26,9 @@ public class HUD : MonoBehaviour
     public Camera gameplayCamera;
     public Camera aerialCamera;
     public GameObject fadeToBlackPanel;
+    public float previewSeconds = 7f;
+    public float fadeSeconds = 0.5f;
+    public GameObject[] hudElements; // everything hidden during the stage preview
 
     private Color32 LowLivesColour = new Color32(240, 33, 33, 255);
     public Material LowLivesMaterial;
@@ -133,21 +136,45 @@ public class HUD : MonoBehaviour
         nextButton.gameObject.SetActive(true);
     }
 
+    public void SetHudVisible(bool visible)
+    {
+        foreach (GameObject element in hudElements)
+            element.SetActive(visible);
+    }
+
     public IEnumerator StagePreview()
     {
-        if (gameplayCamera.enabled)
-        {
-            gameplayCamera.enabled = false;
-            aerialCamera.enabled = true;
-        }
+        AerialCameraController aerialCameraController = aerialCamera.GetComponent<AerialCameraController>();
 
-        aerialCamera.gameObject.GetComponent<AerialCameraController>().isActive = true;
-        yield return new WaitForSeconds(5f);
-        aerialCamera.gameObject.GetComponent<AerialCameraController>().isActive = false;
-        Color blackFadeColour = fadeToBlackPanel.GetComponent<Image>().color;
-        blackFadeColour.a = Mathf.Lerp(0, 1, Time.deltaTime);
+        SetHudVisible(false);
+        gameplayCamera.enabled = false;
+        aerialCameraController.ResetCamera();
+        aerialCamera.enabled = true;
+        aerialCameraController.isActive = true;
+        yield return new WaitForSeconds(previewSeconds);
+
+        yield return Fade(0f, 1f);
+        aerialCameraController.isActive = false;
         aerialCamera.enabled = false;
         gameplayCamera.enabled = true;
-        blackFadeColour.a = Mathf.Lerp(1, 0, Time.deltaTime);
+        SetHudVisible(true);
+        yield return Fade(1f, 0f);
+    }
+
+    IEnumerator Fade(float from, float to)
+    {
+        Image panel = fadeToBlackPanel.GetComponent<Image>();
+        fadeToBlackPanel.SetActive(true);
+        for (float t = 0f; t < fadeSeconds; t += Time.deltaTime)
+        {
+            Color c = panel.color;
+            c.a = Mathf.Lerp(from, to, t / fadeSeconds);
+            panel.color = c;
+            yield return null;
+        }
+        Color end = panel.color;
+        end.a = to;
+        panel.color = end;
+        fadeToBlackPanel.SetActive(to > 0f);
     }
 }

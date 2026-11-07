@@ -4,13 +4,19 @@ public class AerialCameraController : MonoBehaviour
 {
     public GameObject pivot;
     public float speed = 5f;
-    public Vector3 resetPosition;
-    public Quaternion resetRotation;
     public bool isActive;
-    void ResetCamera()
+    Vector3 startPosition;
+    Quaternion startRotation;
+
+    void Awake()
     {
-        pivot.transform.rotation = resetRotation;
-        pivot.transform.position = resetPosition;
+        startPosition = transform.position;
+        startRotation = transform.rotation;
+    }
+
+    public void ResetCamera()
+    {
+        transform.SetPositionAndRotation(startPosition, startRotation);
     }
 
     void Update()
