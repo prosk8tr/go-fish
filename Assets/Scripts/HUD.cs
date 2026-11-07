@@ -29,9 +29,11 @@ public class HUD : MonoBehaviour
     public float previewSeconds = 7f;
     public float fadeSeconds = 0.5f;
     public GameObject[] hudElements; // everything hidden during the stage preview
-
+    public TextMeshProUGUI stageTitle;
+    public TextMeshProUGUI stageTitleScore;
     private Color32 LowLivesColour = new Color32(240, 33, 33, 255);
     public Material LowLivesMaterial;
+    public AudioClip highScoreSound;
 
     public void UpdateFish(int fish, int fishFor1Up)
     {
@@ -123,15 +125,17 @@ public class HUD : MonoBehaviour
 
         stageScoreText.text = "Stage score: " + stageScore;
         stageScoreText.gameObject.SetActive(true);
-        if (isHighScore)
-        {
-            stageHighScoreText.gameObject.SetActive(true);
-        }
         yield return new WaitForSeconds(0.7f);
 
         totalScoreText.text = "Total score: " + totalScore;
         totalScoreText.gameObject.SetActive(true);
         yield return new WaitForSeconds(0.7f);
+
+        if (isHighScore)
+        {
+            stageHighScoreText.gameObject.SetActive(true);
+            yield return new WaitForSeconds(0.7f);
+        }
 
         nextButton.gameObject.SetActive(true);
     }
@@ -142,10 +146,17 @@ public class HUD : MonoBehaviour
             element.SetActive(visible);
     }
 
+    public void UpdateStageTitle(int stage, int score)
+    {
+        stageTitle.text = "Stage " + stage;
+        stageTitleScore.text = "High Score: " + (score > 0 ? score : "---");
+    }
+
     public IEnumerator StagePreview()
     {
         AerialCameraController aerialCameraController = aerialCamera.GetComponent<AerialCameraController>();
 
+        stageTitle.gameObject.SetActive(true);
         SetHudVisible(false);
         gameplayCamera.enabled = false;
         aerialCameraController.ResetCamera();
@@ -157,6 +168,8 @@ public class HUD : MonoBehaviour
         aerialCameraController.isActive = false;
         aerialCamera.enabled = false;
         gameplayCamera.enabled = true;
+        yield return new WaitForSeconds(0.5f);
+        stageTitle.gameObject.SetActive(false);
         SetHudVisible(true);
         yield return Fade(1f, 0f);
     }

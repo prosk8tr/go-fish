@@ -27,13 +27,13 @@ public class GameManager : MonoBehaviour
     int stageStartFish;
     Pickup[] pickups;
     GameObject[] stages;
-    int currentStage = 0;
+    int currentStage = 1;
 
     private void Start()
     {
         pickups = FindObjectsByType<Pickup>(FindObjectsInactive.Include, FindObjectsSortMode.None);
         playerController = GetComponent<PlayerController>();
-        currentStage = 0;
+        currentStage = 1;
         fish = 0;
         fishThisLevel = 0;
         audioSource = GetComponent<AudioSource>();
@@ -99,6 +99,7 @@ public class GameManager : MonoBehaviour
         timer.StopTimer();
         playerController.FreezeControls();
         StartCoroutine(GameOverRoutine());
+        currentStage = 1;
     }
 
     IEnumerator RetryRoutine()
@@ -121,7 +122,7 @@ public class GameManager : MonoBehaviour
 
     void GoToGameOverScreen()
     {
-        currentStage = 0;
+        currentStage = 1;
         bool isHighScore = HighScores.TrySetTotalHighScore(score);
         // TODO: load the game over screen once it exists
         Debug.Log("Game over");
@@ -166,8 +167,9 @@ public class GameManager : MonoBehaviour
         playerController.FreezeControls();
     }
 
-    void StartStage(bool playIntro)
+    public void StartStage(bool playIntro)
     {
+        currentStage++;
         gui.HideStageClear();
         gui.HideTimeOut();
         timeScore = 0;
@@ -186,6 +188,7 @@ public class GameManager : MonoBehaviour
     IEnumerator BeginStage(bool playIntro)
     {
         if (playIntro)
+            gui.UpdateStageTitle(currentStage, HighScores.GetStageHighScore(currentStage));
             yield return StartCoroutine(gui.StagePreview());
         yield return StartCoroutine(Countdown());
     }
