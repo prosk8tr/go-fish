@@ -3,9 +3,8 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class InventoryGUI : MonoBehaviour
+public class HUD : MonoBehaviour
 {
-    private static readonly WaitForSeconds _waitForSeconds0_7 = new WaitForSeconds(0.7f);
 
     public TextMeshProUGUI fishText;
     public TextMeshProUGUI livesText;
@@ -14,7 +13,7 @@ public class InventoryGUI : MonoBehaviour
     public TextMeshProUGUI stageClearText;
     public TextMeshProUGUI timeScoreText;
     public TextMeshProUGUI fishThisLevelText;
-    public TextMeshProUGUI levelScoreText;
+    public TextMeshProUGUI stageScoreText;
     public TextMeshProUGUI totalScoreText;
     public Button nextButton;
     public TextMeshProUGUI countdownText;
@@ -22,8 +21,10 @@ public class InventoryGUI : MonoBehaviour
     public Color countdownColour = Color.white;
     public Color goColour = Color.green;
     public TextMeshProUGUI timeOutText;
+    public TextMeshProUGUI retryText; 
 
-    private static readonly Color32 LowLivesColour = new Color32(240, 33, 33, 255);
+    private Color32 LowLivesColour = new Color32(240, 33, 33, 255);
+    public Material LowLivesMaterial;
 
     public void UpdateFish(int fish, int fishFor1Up)
     {
@@ -65,6 +66,19 @@ public class InventoryGUI : MonoBehaviour
     public void HideTimeOut()
     {
         timeOutText.gameObject.SetActive(false);
+        retryText.gameObject.SetActive(false);
+    }
+
+    public void ShowRetryCountdown(int seconds)
+    {
+        retryText.text = "Retry in " + seconds + "...";
+        retryText.gameObject.SetActive(true);
+    }
+
+    public void ShowGameOver()
+    {
+        retryText.text = "Game over!";
+        retryText.gameObject.SetActive(true);
     }
 
     public void HideStageClear()
@@ -74,38 +88,38 @@ public class InventoryGUI : MonoBehaviour
         stageClearText.gameObject.SetActive(false);
         timeScoreText.gameObject.SetActive(false);
         fishThisLevelText.gameObject.SetActive(false);
-        levelScoreText.gameObject.SetActive(false);
+        stageScoreText.gameObject.SetActive(false);
         totalScoreText.gameObject.SetActive(false);
         nextButton.gameObject.SetActive(false);
     }
 
-    public void ShowStageClear(int timeScore, int fishScore, int levelScore, int totalScore)
+    public void ShowStageClear(int timeScore, int fishScore, int stageScore, int totalScore)
     {
         StopAllCoroutines();
-        StartCoroutine(ShowStageClearRoutine(timeScore, fishScore, levelScore, totalScore));
+        StartCoroutine(ShowStageClearRoutine(timeScore, fishScore, stageScore, totalScore));
     }
 
-    private IEnumerator ShowStageClearRoutine(int timeScore, int fishScore, int levelScore, int totalScore)
+    private IEnumerator ShowStageClearRoutine(int timeScore, int fishScore, int stageScore, int totalScore)
     {
         scorePanel.SetActive(true);
         stageClearText.gameObject.SetActive(true);
-        yield return _waitForSeconds0_7;
+        yield return new WaitForSeconds(0.7f);
 
         timeScoreText.text = "Time score: " + timeScore;
         timeScoreText.gameObject.SetActive(true);
-        yield return _waitForSeconds0_7;
+        yield return new WaitForSeconds(0.7f);
 
         fishThisLevelText.text = "Fish score: " + fishScore;
         fishThisLevelText.gameObject.SetActive(true);
-        yield return _waitForSeconds0_7;
+        yield return new WaitForSeconds(0.7f);
 
-        levelScoreText.text = "Level score: " + levelScore;
-        levelScoreText.gameObject.SetActive(true);
-        yield return _waitForSeconds0_7;
+        stageScoreText.text = "Stage score: " + stageScore;
+        stageScoreText.gameObject.SetActive(true);
+        yield return new WaitForSeconds(0.7f);
 
         totalScoreText.text = "Total score: " + totalScore;
         totalScoreText.gameObject.SetActive(true);
-        yield return _waitForSeconds0_7;
+        yield return new WaitForSeconds(0.7f);
 
         nextButton.gameObject.SetActive(true);
     }

@@ -6,7 +6,7 @@ public class Goal : MonoBehaviour
     {
         if (other.gameObject.CompareTag("Player"))
         {
-            other.GetComponent<Inventory>().EndStage();
+            other.GetComponent<GameManager>().EndStage();
             gameObject.GetComponentInChildren<ParticleSystem>().Play();
             gameObject.GetComponent<AudioSource>().Play();
         }

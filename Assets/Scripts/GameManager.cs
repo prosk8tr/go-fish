@@ -2,27 +2,34 @@ using System;
 using System.Collections;
 using UnityEngine;
 
-public class Inventory : MonoBehaviour
+public class GameManager : MonoBehaviour
 {
     public int fish = 0;
     public int fishValue = 100;
     int fishThisLevel = 0;
     int timeScore = 0;
-    int levelScore = 0;
+    int stageScore = 0;
     int score = 0;
     AudioSource audioSource;
     public AudioClip pickupSound;
     public int lives = 3;
-    public InventoryGUI gui;
+    public HUD gui;
     public int fishFor1Up;
     public Timer timer;
     public int countdownSeconds = 3;
     private bool hasWon = false;
-    private bool isGameOver = false;
+    private bool isTimedOut = false; // the current stage attempt has timed out and is waiting to retry
+    private bool isGameOver = false; // the run is over (no lives left); the game over screen follows
     PlayerController playerController;
+    public int retryCountdownSeconds = 3;
+    public float gameOverWait = 3f;
+    int stageStartScore;
+    int stageStartFish;
+    Pickup[] pickups;
 
     private void Start()
     {
+        pickups = FindObjectsByType<Pickup>(FindObjectsInactive.Include, FindObjectsSortMode.None);
         playerController = GetComponent<PlayerController>();
         fish = 0;
         fishThisLevel = 0;
@@ -32,14 +39,16 @@ public class Inventory : MonoBehaviour
         gui.UpdateScore(score);
         playerController.DisableMovement();
         timer.ResetTimer();
+        stageStartScore = score;
+        stageStartFish = fish;
         StartCoroutine(Countdown());
     }
 
     void Update()
     {
-        if(timer.timeRemaining <= 0 && !hasWon && !isGameOver)
+        if(timer.timeRemaining <= 0 && !hasWon && !isTimedOut && !isGameOver)
         {
-            isGameOver = true;
+            isTimedOut = true;
             TimeOut();
         }
     }
@@ -49,14 +58,13 @@ public class Inventory : MonoBehaviour
         fish++;
 
         fishThisLevel++;
-        levelScore += fishValue;
+        stageScore += fishValue;
         score += fishValue;
         gui.UpdateFish(fish, fishFor1Up);
         gui.UpdateScore(score);
         if(fish >= fishFor1Up)
         {
             lives++;
-            print("1UP"); //1UP, sfx, etc
             fish = 0; // Reset the counter -- collected fish already added to total score so nothing is lost
             gui.UpdateFish(fish, fishFor1Up);
             gui.UpdateLives(lives);
@@ -73,17 +81,73 @@ public class Inventory : MonoBehaviour
         playerController.FreezeControls();
         playerController.SlowDown();
         gui.ShowTimeOut();
-        playerController.Die();
+        LoseLife();
+        if (OutOfLives)
+            GameOver();
+        else
+            StartCoroutine(RetryRoutine());
+    }
 
+    public bool OutOfLives => lives <= 0;
+
+    // Ends the run: stops the clock and input, shows "Game over!", then heads to the game over screen
+    public void GameOver()
+    {
+        isGameOver = true;
+        timer.StopTimer();
+        playerController.FreezeControls();
+        StartCoroutine(GameOverRoutine());
+    }
+
+    IEnumerator RetryRoutine()
+    {
+        for (int i = retryCountdownSeconds; i > 0; i--)
+        {
+            gui.ShowRetryCountdown(i);
+            yield return new WaitForSeconds(1f);
+        }
+        ResetStageProgress();
+        StartStage();
+    }
+
+    IEnumerator GameOverRoutine()
+    {
+        gui.ShowGameOver();
+        yield return new WaitForSeconds(gameOverWait);
+        GoToGameOverScreen();
+    }
+
+    void GoToGameOverScreen()
+    {
+        // TODO: load the game over screen once it exists, e.g. SceneManager.LoadScene("GameOver")
+        Debug.Log("Game over");
+    }
+
+    void ResetStageProgress()
+    {
+        timeScore = 0;
+        fishThisLevel = 0;
+        stageScore = 0;
+        score = stageStartScore;
+        fish = stageStartFish;
+        gui.UpdateScore(score);
+        gui.UpdateFish(fish, fishFor1Up);
+        RespawnPickups();
+    }
+
+    void RespawnPickups()
+    {
+        foreach (Pickup pickup in pickups)
+            pickup.gameObject.SetActive(true);
     }
 
     void CalcScore ()
-    {   if (!hasWon && !isGameOver)
+    {   if (!hasWon && !isTimedOut && !isGameOver)
         {
             hasWon = true;
             timer.StopTimer();
-            timeScore = (int)Math.Round(timer.timeRemaining, 2) * 1000;
-            levelScore += timeScore;
+            timeScore = (int)(Mathf.Round(timer.timeRemaining * 1000));
+            stageScore += timeScore;
             score += timeScore;
             gui.UpdateScore(score);
         }
@@ -93,7 +157,7 @@ public class Inventory : MonoBehaviour
     {
         
         CalcScore();
-        gui.ShowStageClear(timeScore, fishThisLevel * fishValue, levelScore, score);
+        gui.ShowStageClear(timeScore, fishThisLevel * fishValue, stageScore, score);
         playerController.FreezeControls();
     }
 
@@ -103,12 +167,14 @@ public class Inventory : MonoBehaviour
         gui.HideTimeOut();
         timeScore = 0;
         fishThisLevel = 0;
-        levelScore = 0;
+        stageScore = 0;
         hasWon = false;
-        isGameOver = false;
+        isTimedOut = false;
 
         playerController.ResetToRespawn();
         timer.ResetTimer();
+        stageStartScore = score;
+        stageStartFish = fish;
         StartCoroutine(Countdown());
     }
 

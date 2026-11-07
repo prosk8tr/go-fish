@@ -12,7 +12,7 @@ public class Pickup : MonoBehaviour
     {
         if (other.gameObject.CompareTag("Player"))
         {
-            other.GetComponent<Inventory>().FishPickup();
+            other.GetComponent<GameManager>().FishPickup();
             particleSys.EmitFishParticles(transform);
             gameObject.SetActive(false);
         }

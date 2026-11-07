@@ -11,7 +11,7 @@ public class PlayerController : MonoBehaviour
     public CalculateYaw calcYaw;
     AudioSource audioSource;
     public AudioClip dieSound;
-    public Inventory inventory;
+    public GameManager gameManager;
     public Vector3 RespawnPosition { get; set; }
     public Collider ballCollider;
     public CameraController cameraController;
@@ -35,32 +35,40 @@ public class PlayerController : MonoBehaviour
         rb.AddForce(direction * movement * force, ForceMode.Acceleration);
     }
 
+    // The player is only in play while controls are enabled (not during the countdown, timeout, stage clear or game over)
+    public bool InPlay => enabled;
+
     public void Die()
     {
+        if (!InPlay) return; // invulnerable while not in play
         audioSource.PlayOneShot(dieSound);
+        gameManager.timer.StopTimer();
         ballCollider.enabled = false;
         StartCoroutine("RespawnPlayer");
     } 
     public void FreezeControls()
     {
         DisableMovement();
-        cameraController.GetComponent<TiltInput>().tilt = Vector2.zero;
-        cameraController.enabled = false;
     }
 
+    // Stops the player responding to input. The tilt eases back to neutral, as if the mouse was released
     public void DisableMovement()
     {
         enabled = false;
+        input.acceptInput = false;
+        calcYaw.frozen = true;
     }
 
     public void EnableControls()
     {
+        input.acceptInput = true;
+        calcYaw.frozen = false;
         enabled = true;
     }
 
     public void ResetToRespawn()
     {
-        transform.position = RespawnPosition;
+        TeleportTo(RespawnPosition);
         StopBall();
         ResetOrientation();
         cameraController.enabled = true;
@@ -70,22 +78,36 @@ public class PlayerController : MonoBehaviour
     {
         calcYaw.ResetYaw();
         playerModel.ResetRotation();
-        input.tilt = new Vector2(0,0);
-        input.enabled = false;
     }
 
     IEnumerator RespawnPlayer()
     {
         yield return new WaitForSeconds(dieWait);
-        inventory.LoseLife();
+        gameManager.LoseLife();
+        if (gameManager.OutOfLives)
+        {
+            gameManager.GameOver();
+            yield break; // no respawn -- the run is over
+        }
         ballCollider.enabled = true;
-        rb.transform.position = RespawnPosition;
+        TeleportTo(RespawnPosition);
         StopBall();
+        gameManager.timer.ResetTimer(); // the clock always restarts from the full stage time
+        gameManager.timer.StartTimer();
     }
     public void SlowDown()
     {
         rb.linearVelocity *= slowDownScale;
         rb.angularVelocity *= slowDownScale;
+    }
+
+    // Moves the ball through the Rigidbody. Setting transform.position alone can be overwritten by
+    // interpolation before the physics step picks it up, leaving the ball where it was.
+    void TeleportTo(Vector3 position)
+    {
+        rb.position = position;
+        transform.position = position;
+        Physics.SyncTransforms();
     }
 
     void StopBall()

@@ -8,6 +8,8 @@ public class Timer : MonoBehaviour
     public TextMeshProUGUI timeText;
     public bool isActive = false;
     Color defaultColour;
+    public float turnRedBelow;
+    public Material LowTimeMaterial;
 
     void Awake()
     {
@@ -16,7 +18,7 @@ public class Timer : MonoBehaviour
     void Update()
     {
         if (isActive)
-        {   if(timeRemaining <= 11)
+        {   if(timeRemaining < turnRedBelow)
             {
                 timeText.color = new Color32(240, 33, 33, 255);
             }
@@ -32,13 +34,8 @@ public class Timer : MonoBehaviour
                 StopTimer();
             }
         }
-        else
-        {
-            print(timeRemaining);
-        }
     }
 
-    // Sets the timer back to its start time and shows it, without starting it
     public void ResetTimer()
     {
         isActive = false;

@@ -159,7 +159,7 @@ MonoBehaviour:
   input: {fileID: 0}
   calcYaw: {fileID: 0}
   dieSound: {fileID: 8300000, guid: c1c78203f1381424f90e732f2dd1b25d, type: 3}
-  inventory: {fileID: 2922752153131064889}
+  gameManager: {fileID: 2922752153131064889}
   ballCollider: {fileID: 4533928748670120932}
   dieWait: 1
 --- !u!114 &2922752153131064889
@@ -173,7 +173,7 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a4a2796f3f474ab42ac10d0a5ec56db6, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Inventory
+  m_EditorClassIdentifier: Assembly-CSharp::GameManager
   fish: 0
   pickupSound: {fileID: 8300000, guid: 62503c86ad1484349a36fbdf3ee9cbb8, type: 3}
   lives: 3
