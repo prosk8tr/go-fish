@@ -8,11 +8,21 @@ public class CalculateYaw : MonoBehaviour
     float maxTurnRate = 120f; // Degrees per second
     float maxAngle = 120f; // For reversing, don't turn camera for backwards movement
     public float Yaw { get; private set; }
+    public bool frozen = false;
     float smoothTime = 0.4f;
     float yawVelocity;
 
+    // Snaps the camera yaw to the given angle and cancels any in-progress smoothing
+    public void ResetYaw(float yaw = 0f)
+    {
+        Yaw = yaw;
+        yawVelocity = 0f;
+    }
+
     void LateUpdate()
     {
+        if (frozen) return;
+
         // Get ball velocity and speed
         Vector3 velocity = rbBall.linearVelocity;
         velocity.y = 0f;

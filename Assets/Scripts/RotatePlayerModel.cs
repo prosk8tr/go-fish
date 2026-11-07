@@ -6,6 +6,19 @@ public class RotatePlayerModel : MonoBehaviour
     public float minSpeed = 2f;
     public float speedForMaxTurn = 8f;
     public float maxTurnSpeed = 300f;
+    Quaternion initialRotation;
+
+    void Start()
+    {
+        initialRotation = transform.rotation;
+    }
+
+    // Returns the model to the rotation it had when the scene started
+    public void ResetRotation()
+    {
+        transform.rotation = initialRotation;
+    }
+
     void LateUpdate()
     {
         Vector3 velocity = rbBall.linearVelocity;

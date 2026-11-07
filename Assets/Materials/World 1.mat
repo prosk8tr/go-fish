@@ -262,7 +262,7 @@ Material:
     - _1stTo2nd_ShadeFeather: 0.1
     - _1stTo2nd_ShadeStart: 0.25
     - _1st_ShadeColor_Feather: 0.0001
-    - _1st_ShadeColor_Step: 0.255
+    - _1st_ShadeColor_Step: 0.334
     - _2DLightStrength: 1
     - _2nd_ShadeColor_Feather: 0.0001
     - _2nd_ShadeColor_Step: 0
@@ -294,7 +294,7 @@ Material:
     - _AutoRenderQueue: 1
     - _BaseColorOverridden: 0
     - _BaseColorVisible: 1
-    - _BaseColor_Step: 0.255
+    - _BaseColor_Step: 0.334
     - _BaseShade_Feather: 0.0001
     - _BaseTo1st_ShadeFeather: 0.1
     - _BaseTo1st_ShadeStart: 0.5

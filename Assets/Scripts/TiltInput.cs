@@ -9,7 +9,8 @@ public class TiltInput : MonoBehaviour
     float maxTilt = 25f; // degrees
     float smoothing = 10f;
     Vector2 targetTilt;
-    public Vector2 tilt { get; private set; } // smoothed tilt, in degrees
+    public bool acceptInput = true; // when false, mouse input is ignored and the tilt eases back to neutral
+    public Vector2 tilt { get; set; } // smoothed tilt, in degrees
     public Vector2 TiltStrength
     {
         get
@@ -21,7 +22,7 @@ public class TiltInput : MonoBehaviour
     private void Update()
     {
         var mouse = Mouse.current;
-        if (mouse != null && mouse.leftButton.isPressed)
+        if (acceptInput && mouse != null && mouse.leftButton.isPressed)
         {
             targetTilt += mouse.delta.ReadValue() * sensitivity;
 
