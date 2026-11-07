@@ -17,7 +17,8 @@ public class Inventory : MonoBehaviour
     public int fishFor1Up;
     public Timer timer;
     public int countdownSeconds = 3;
-    private bool hasWon;
+    private bool hasWon = false;
+    private bool isGameOver = false;
     PlayerController playerController;
 
     private void Start()
@@ -32,6 +33,15 @@ public class Inventory : MonoBehaviour
         playerController.DisableMovement();
         timer.ResetTimer();
         StartCoroutine(Countdown());
+    }
+
+    void Update()
+    {
+        if(timer.timeRemaining <= 0 && !hasWon && !isGameOver)
+        {
+            isGameOver = true;
+            TimeOut();
+        }
     }
     public void FishPickup()
     {
@@ -58,9 +68,17 @@ public class Inventory : MonoBehaviour
         lives--;
         gui.UpdateLives(lives);
     }
+    void TimeOut()
+    {
+        playerController.FreezeControls();
+        playerController.SlowDown();
+        gui.ShowTimeOut();
+        playerController.Die();
+
+    }
 
     void CalcScore ()
-    {   if (!hasWon)
+    {   if (!hasWon && !isGameOver)
         {
             hasWon = true;
             timer.StopTimer();
@@ -70,8 +88,10 @@ public class Inventory : MonoBehaviour
             gui.UpdateScore(score);
         }
     }
+    
     public void EndStage()
     {
+        
         CalcScore();
         gui.ShowStageClear(timeScore, fishThisLevel * fishValue, levelScore, score);
         playerController.FreezeControls();
@@ -80,10 +100,12 @@ public class Inventory : MonoBehaviour
     public void StartStage()
     {
         gui.HideStageClear();
+        gui.HideTimeOut();
         timeScore = 0;
         fishThisLevel = 0;
         levelScore = 0;
         hasWon = false;
+        isGameOver = false;
 
         playerController.ResetToRespawn();
         timer.ResetTimer();

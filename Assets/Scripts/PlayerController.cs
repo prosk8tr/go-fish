@@ -17,6 +17,7 @@ public class PlayerController : MonoBehaviour
     public CameraController cameraController;
     public RotatePlayerModel playerModel;
     public float dieWait = 1f;
+    public float slowDownScale = 0.95f;
     // Awake rather than Start, so setup still runs if movement is disabled before the first frame
     void Awake()
     {
@@ -34,7 +35,7 @@ public class PlayerController : MonoBehaviour
         rb.AddForce(direction * movement * force, ForceMode.Acceleration);
     }
 
-    void Die()
+    public void Die()
     {
         audioSource.PlayOneShot(dieSound);
         ballCollider.enabled = false;
@@ -69,6 +70,8 @@ public class PlayerController : MonoBehaviour
     {
         calcYaw.ResetYaw();
         playerModel.ResetRotation();
+        input.tilt = new Vector2(0,0);
+        input.enabled = false;
     }
 
     IEnumerator RespawnPlayer()
@@ -78,6 +81,11 @@ public class PlayerController : MonoBehaviour
         ballCollider.enabled = true;
         rb.transform.position = RespawnPosition;
         StopBall();
+    }
+    public void SlowDown()
+    {
+        rb.linearVelocity *= slowDownScale;
+        rb.angularVelocity *= slowDownScale;
     }
 
     void StopBall()

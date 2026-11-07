@@ -19,8 +19,9 @@ public class InventoryGUI : MonoBehaviour
     public Button nextButton;
     public TextMeshProUGUI countdownText;
     public Material[] countdownMaterials; // one per countdown step, in order, with the final one used for "GO!"
-    public Color countdownColour = Color.white; // face colour for the numbers
-    public Color goColour = Color.green; // face colour for "GO!"
+    public Color countdownColour = Color.white;
+    public Color goColour = Color.green;
+    public TextMeshProUGUI timeOutText;
 
     private static readonly Color32 LowLivesColour = new Color32(240, 33, 33, 255);
 
@@ -54,6 +55,16 @@ public class InventoryGUI : MonoBehaviour
     public void HideCountdown()
     {
         countdownText.gameObject.SetActive(false);
+    }
+
+    public void ShowTimeOut()
+    {
+        timeOutText.gameObject.SetActive(true);
+    }
+
+    public void HideTimeOut()
+    {
+        timeOutText.gameObject.SetActive(false);
     }
 
     public void HideStageClear()

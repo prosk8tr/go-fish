@@ -32,6 +32,10 @@ public class Timer : MonoBehaviour
                 StopTimer();
             }
         }
+        else
+        {
+            print(timeRemaining);
+        }
     }
 
     // Sets the timer back to its start time and shows it, without starting it

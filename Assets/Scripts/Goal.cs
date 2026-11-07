@@ -2,7 +2,6 @@ using UnityEngine;
 
 public class Goal : MonoBehaviour
 {
-    public float speedScale = 0.95f;
     private void OnTriggerEnter(Collider other)
     {
         if (other.gameObject.CompareTag("Player"))
@@ -17,9 +16,8 @@ public class Goal : MonoBehaviour
     {
         if (other.gameObject.CompareTag("Player"))
         {
-            Rigidbody rb = other.GetComponent<Rigidbody>();
-            rb.linearVelocity *= speedScale;
-            rb.angularVelocity *= speedScale;
+            GameObject player = other.gameObject;
+            player.SendMessage("SlowDown");
         }
     }
 }

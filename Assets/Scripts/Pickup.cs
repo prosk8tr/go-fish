@@ -14,7 +14,7 @@ public class Pickup : MonoBehaviour
         {
             other.GetComponent<Inventory>().FishPickup();
             particleSys.EmitFishParticles(transform);
-            Destroy(gameObject);
+            gameObject.SetActive(false);
         }
     }
 }
