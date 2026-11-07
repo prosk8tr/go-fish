@@ -35,12 +35,11 @@ public class PlayerController : MonoBehaviour
         rb.AddForce(direction * movement * force, ForceMode.Acceleration);
     }
 
-    // The player is only in play while controls are enabled (not during the countdown, timeout, stage clear or game over)
     public bool InPlay => enabled;
 
     public void Die()
     {
-        if (!InPlay) return; // invulnerable while not in play
+        if (!InPlay) return;
         audioSource.PlayOneShot(dieSound);
         gameManager.timer.StopTimer();
         ballCollider.enabled = false;
@@ -51,7 +50,6 @@ public class PlayerController : MonoBehaviour
         DisableMovement();
     }
 
-    // Stops the player responding to input. The tilt eases back to neutral, as if the mouse was released
     public void DisableMovement()
     {
         enabled = false;
@@ -87,12 +85,12 @@ public class PlayerController : MonoBehaviour
         if (gameManager.OutOfLives)
         {
             gameManager.GameOver();
-            yield break; // no respawn -- the run is over
+            yield break;
         }
         ballCollider.enabled = true;
         TeleportTo(RespawnPosition);
         StopBall();
-        gameManager.timer.ResetTimer(); // the clock always restarts from the full stage time
+        gameManager.timer.ResetTimer();
         gameManager.timer.StartTimer();
     }
     public void SlowDown()
@@ -101,13 +99,11 @@ public class PlayerController : MonoBehaviour
         rb.angularVelocity *= slowDownScale;
     }
 
-    // Moves the ball through the Rigidbody. Setting transform.position alone can be overwritten by
-    // interpolation before the physics step picks it up, leaving the ball where it was.
     void TeleportTo(Vector3 position)
     {
         rb.position = position;
         transform.position = position;
-        Physics.SyncTransforms();
+        Physics.SyncTransforms(); // Make sure the transform isn't overriden by the physics, which can cause the player to not teleport to game start
     }
 
     void StopBall()

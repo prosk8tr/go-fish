@@ -14,6 +14,7 @@ public class HUD : MonoBehaviour
     public TextMeshProUGUI timeScoreText;
     public TextMeshProUGUI fishThisLevelText;
     public TextMeshProUGUI stageScoreText;
+    public TextMeshProUGUI stageHighScoreText;
     public TextMeshProUGUI totalScoreText;
     public Button nextButton;
     public TextMeshProUGUI countdownText;
@@ -89,17 +90,18 @@ public class HUD : MonoBehaviour
         timeScoreText.gameObject.SetActive(false);
         fishThisLevelText.gameObject.SetActive(false);
         stageScoreText.gameObject.SetActive(false);
+        stageHighScoreText.gameObject.SetActive(false);
         totalScoreText.gameObject.SetActive(false);
         nextButton.gameObject.SetActive(false);
     }
 
-    public void ShowStageClear(int timeScore, int fishScore, int stageScore, int totalScore)
+    public void ShowStageClear(int timeScore, int fishScore, int stageScore, int totalScore, bool isHighScore)
     {
         StopAllCoroutines();
-        StartCoroutine(ShowStageClearRoutine(timeScore, fishScore, stageScore, totalScore));
+        StartCoroutine(ShowStageClearRoutine(timeScore, fishScore, stageScore, totalScore, isHighScore));
     }
 
-    private IEnumerator ShowStageClearRoutine(int timeScore, int fishScore, int stageScore, int totalScore)
+    private IEnumerator ShowStageClearRoutine(int timeScore, int fishScore, int stageScore, int totalScore, bool isHighScore)
     {
         scorePanel.SetActive(true);
         stageClearText.gameObject.SetActive(true);
@@ -115,6 +117,10 @@ public class HUD : MonoBehaviour
 
         stageScoreText.text = "Stage score: " + stageScore;
         stageScoreText.gameObject.SetActive(true);
+        if (isHighScore)
+        {
+            stageHighScoreText.gameObject.SetActive(true);
+        }
         yield return new WaitForSeconds(0.7f);
 
         totalScoreText.text = "Total score: " + totalScore;

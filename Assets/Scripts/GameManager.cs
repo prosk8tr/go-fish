@@ -18,19 +18,22 @@ public class GameManager : MonoBehaviour
     public Timer timer;
     public int countdownSeconds = 3;
     private bool hasWon = false;
-    private bool isTimedOut = false; // the current stage attempt has timed out and is waiting to retry
-    private bool isGameOver = false; // the run is over (no lives left); the game over screen follows
+    private bool isTimedOut = false; // player has run out of time
+    private bool isGameOver = false; // the run is over (no lives left)
     PlayerController playerController;
     public int retryCountdownSeconds = 3;
     public float gameOverWait = 3f;
     int stageStartScore;
     int stageStartFish;
     Pickup[] pickups;
+    GameObject[] stages;
+    int currentStage = 0;
 
     private void Start()
     {
         pickups = FindObjectsByType<Pickup>(FindObjectsInactive.Include, FindObjectsSortMode.None);
         playerController = GetComponent<PlayerController>();
+        currentStage = 0;
         fish = 0;
         fishThisLevel = 0;
         audioSource = GetComponent<AudioSource>();
@@ -90,7 +93,6 @@ public class GameManager : MonoBehaviour
 
     public bool OutOfLives => lives <= 0;
 
-    // Ends the run: stops the clock and input, shows "Game over!", then heads to the game over screen
     public void GameOver()
     {
         isGameOver = true;
@@ -119,7 +121,9 @@ public class GameManager : MonoBehaviour
 
     void GoToGameOverScreen()
     {
-        // TODO: load the game over screen once it exists, e.g. SceneManager.LoadScene("GameOver")
+        currentStage = 0;
+        bool isHighScore = HighScores.TrySetTotalHighScore(score);
+        // TODO: load the game over screen once it exists
         Debug.Log("Game over");
     }
 
@@ -157,7 +161,8 @@ public class GameManager : MonoBehaviour
     {
         
         CalcScore();
-        gui.ShowStageClear(timeScore, fishThisLevel * fishValue, stageScore, score);
+        bool isHighScore = HighScores.TrySetStageHighScore(currentStage, stageScore);
+        gui.ShowStageClear(timeScore, fishThisLevel * fishValue, stageScore, score, isHighScore);
         playerController.FreezeControls();
     }
 

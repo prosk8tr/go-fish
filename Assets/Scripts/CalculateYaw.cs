@@ -8,7 +8,7 @@ public class CalculateYaw : MonoBehaviour
     float maxTurnRate = 120f; // Degrees per second
     float maxAngle = 120f; // For reversing, don't turn camera for backwards movement
     public float Yaw { get; private set; }
-    public bool frozen = false; // when true, the yaw stays where it is
+    public bool frozen = false;
     float smoothTime = 0.4f;
     float yawVelocity;
 
