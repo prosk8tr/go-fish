@@ -188,8 +188,10 @@ public class GameManager : MonoBehaviour
     IEnumerator BeginStage(bool playIntro)
     {
         if (playIntro)
+        {
             gui.UpdateStageTitle(currentStage, HighScores.GetStageHighScore(currentStage));
             yield return StartCoroutine(gui.StagePreview());
+        }
         yield return StartCoroutine(Countdown());
     }
 
