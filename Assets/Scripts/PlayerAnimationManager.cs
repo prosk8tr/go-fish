@@ -3,15 +3,15 @@ using UnityEngine;
 public class PlayerAnimationManager : MonoBehaviour
 {
     Animator animator;
-    Rigidbody rb;
+    public Rigidbody rb;
+    public float speed = 0;
     private void Awake()
     {
         animator = gameObject.GetComponent<Animator>();
-        rb = gameObject.GetComponent<Rigidbody>();
     }
     void Update()
     {
-        float speed = rb.linearVelocity.magnitude;
+        speed = rb.linearVelocity.magnitude;
         animator.SetFloat("Speed", speed);
     }
 }

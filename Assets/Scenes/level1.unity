@@ -6267,6 +6267,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 020d29ada81ac3f4e9c55a7ece027e82, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1936701470}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 020d29ada81ac3f4e9c55a7ece027e82, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1936701474}
   m_SourcePrefab: {fileID: 100100000, guid: 020d29ada81ac3f4e9c55a7ece027e82, type: 3}
 --- !u!4 &1936701468 stripped
 Transform:
@@ -6321,6 +6324,20 @@ MonoBehaviour:
   minSpeed: 2
   speedForMaxTurn: 8
   maxTurnSpeed: 300
+--- !u!114 &1936701474
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1936701469}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 951d8996acc9617448ffcc01c9af25f9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerAnimationManager
+  rb: {fileID: 1212419556}
+  speed: 0
 --- !u!1 &1956499047
 GameObject:
   m_ObjectHideFlags: 0
