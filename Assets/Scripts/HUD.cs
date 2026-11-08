@@ -1,6 +1,7 @@
 using System.Collections;
 using TMPro;
 using UnityEngine;
+using UnityEngine.InputSystem;
 using UnityEngine.UI;
 
 public class HUD : MonoBehaviour
@@ -162,7 +163,11 @@ public class HUD : MonoBehaviour
         aerialCameraController.ResetCamera();
         aerialCamera.enabled = true;
         aerialCameraController.isActive = true;
-        yield return new WaitForSeconds(previewSeconds);
+
+        // Wait a frame to make sure the next button click is finished
+        yield return null;
+        for (float t = 0f; t < previewSeconds && !AnyInputPressed(); t += Time.deltaTime)
+            yield return null;
 
         yield return Fade(0f, 1f);
         aerialCameraController.isActive = false;
@@ -172,6 +177,16 @@ public class HUD : MonoBehaviour
         stageTitle.gameObject.SetActive(false);
         SetHudVisible(true);
         yield return Fade(1f, 0f);
+    }
+
+    static bool AnyInputPressed()
+    {
+        Keyboard keyboard = Keyboard.current;
+        Mouse mouse = Mouse.current;
+        return (keyboard != null && keyboard.anyKey.wasPressedThisFrame)
+            || (mouse != null && (mouse.leftButton.wasPressedThisFrame
+                               || mouse.rightButton.wasPressedThisFrame
+                               || mouse.middleButton.wasPressedThisFrame));
     }
 
     IEnumerator Fade(float from, float to)
