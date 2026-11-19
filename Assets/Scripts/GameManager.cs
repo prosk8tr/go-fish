@@ -20,23 +20,67 @@ public class GameManager : MonoBehaviour
     private bool hasWon = false;
     private bool isTimedOut = false; // player has run out of time
     private bool isGameOver = false; // the run is over (no lives left)
+    private bool isGameStarted = false;
     PlayerController playerController;
     public int retryCountdownSeconds = 3;
     public float gameOverWait = 3f;
     int stageStartScore;
     int stageStartFish;
     Pickup[] pickups;
-    GameObject[] stages;
-    int currentStage = 1;
+    public GameObject[] stages;
+    int currentStage = 0;
+    public GameObject mainMenuGUI;
+    public Camera mainMenuCamera;
+    public bool IsGameStarted = false;
+    public GameObject controlsGUI;
 
     private void Start()
     {
-        pickups = FindObjectsByType<Pickup>(FindObjectsInactive.Include, FindObjectsSortMode.None);
         playerController = GetComponent<PlayerController>();
-        currentStage = 1;
+        audioSource = GetComponent<AudioSource>();
+        ShowMainMenu();
+        ShowControls(false);
+    }
+
+    public void ShowMainMenu()
+    {
+        gui.SetHudVisible(false);
+        playerController.EnableControls();
+        playerController.calcYaw.ResetYaw(mainMenuCamera.transform.eulerAngles.y);
+        playerController.calcYaw.frozen = true;
+        gui.gameplayCamera.enabled = false;
+        gui.aerialCamera.enabled = false;
+        mainMenuCamera.enabled = true;
+        mainMenuGUI.SetActive(true);
+    }
+
+    public void HideMainMenu()
+    {
+        mainMenuGUI.SetActive(false);
+        mainMenuCamera.enabled = false;
+        gui.gameplayCamera.enabled = true;
+        gui.SetHudVisible(true);
+    }
+
+    public void ShowControls(bool visible)
+    {
+        controlsGUI.SetActive(visible);
+    }
+
+    public void StartGame()
+    {
+        HideMainMenu();
+        ShowControls(false);
+        currentStage = 0;
+        isGameStarted = true;
+        hasWon = false;
+        isTimedOut = false;
+        isGameOver = false;
+        pickups = FindObjectsByType<Pickup>(FindObjectsInactive.Include, FindObjectsSortMode.None);
         fish = 0;
         fishThisLevel = 0;
-        audioSource = GetComponent<AudioSource>();
+        lives = 3;
+        score = 0;
         gui.UpdateFish(fish, fishFor1Up);
         gui.UpdateLives(lives);
         gui.UpdateScore(score);
@@ -44,12 +88,12 @@ public class GameManager : MonoBehaviour
         timer.ResetTimer();
         stageStartScore = score;
         stageStartFish = fish;
-        StartCoroutine(BeginStage(true));
+        StartStage(true);
     }
 
     void Update()
     {
-        if(timer.timeRemaining <= 0 && !hasWon && !isTimedOut && !isGameOver)
+        if(isGameStarted && timer.timeRemaining <= 0 && !hasWon && !isTimedOut && !isGameOver)
         {
             isTimedOut = true;
             TimeOut();
@@ -99,7 +143,7 @@ public class GameManager : MonoBehaviour
         timer.StopTimer();
         playerController.FreezeControls();
         StartCoroutine(GameOverRoutine());
-        currentStage = 1;
+        currentStage = 0;
     }
 
     IEnumerator RetryRoutine()
@@ -122,7 +166,7 @@ public class GameManager : MonoBehaviour
 
     void GoToGameOverScreen()
     {
-        currentStage = 1;
+        currentStage = 0;
         bool isHighScore = HighScores.TrySetTotalHighScore(score);
         // TODO: load the game over screen once it exists
         Debug.Log("Game over");
@@ -142,8 +186,9 @@ public class GameManager : MonoBehaviour
 
     void RespawnPickups()
     {
-        foreach (Pickup pickup in pickups)
+        foreach (Pickup pickup in pickups) { 
             pickup.gameObject.SetActive(true);
+        }
     }
 
     void CalcScore ()
@@ -169,7 +214,11 @@ public class GameManager : MonoBehaviour
 
     public void StartStage(bool playIntro)
     {
+        stages[currentStage].gameObject.SetActive(false);
         currentStage++;
+        stages[currentStage].gameObject.SetActive(true);
+        pickups = FindObjectsByType<Pickup>(FindObjectsInactive.Include, FindObjectsSortMode.None);
+        RespawnPickups();
         gui.HideStageClear();
         gui.HideTimeOut();
         timeScore = 0;

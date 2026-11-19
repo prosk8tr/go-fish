@@ -40,6 +40,12 @@ public class PlayerController : MonoBehaviour
     public void Die()
     {
         if (!InPlay) return;
+        if (!gameManager.IsGameStarted)
+        {
+            StopBall();
+            TeleportTo(RespawnPosition);
+            return;
+        }
         audioSource.PlayOneShot(dieSound);
         gameManager.timer.StopTimer();
         ballCollider.enabled = false;
